@@ -1,6 +1,7 @@
 ---
 stages:
   - check
+  - test
 
 workflow:
   rules:
@@ -36,3 +37,22 @@ lint:
     when: always
     reports:
       codequality: gl-code-quality-report.json
+
+test:
+  stage: test
+  cache:
+    key:
+      files:
+        - go.sum
+    paths:
+      - .cache/gomod
+      - .cache/gobuild
+    policy: pull-push
+  before_script:
+    - go install gotest.tools/gotestsum@v1.13.0
+  script:
+    - gotestsum --junitfile report.xml --format testname -- ./...
+  artifacts:
+    when: always
+    reports:
+      junit: report.xml
