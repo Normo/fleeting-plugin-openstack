@@ -1,0 +1,44 @@
+---
+stages:
+  - check
+
+workflow:
+  rules:
+    - if: $CI_COMMIT_TAG
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    # Branch pipelines only when no merge request is open, to avoid running the
+    # same commit twice.
+    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS
+      when: never
+    - if: $CI_COMMIT_BRANCH
+
+default:
+  image: golang:1.24
+  tags:
+    - alasca
+
+variables:
+  GOMODCACHE: ${CI_PROJECT_DIR}/.cache/gomod
+  GOCACHE: ${CI_PROJECT_DIR}/.cache/gobuild
+
+lint:
+  stage: check
+  image: golangci/golangci-lint:v2.12.2
+  cache:
+    key:
+      files:
+        - go.sum
+      prefix: golangci
+    paths:
+      - .cache/gomod
+      - .cache/golangci-lint
+    policy: pull-push
+  variables:
+    GOLANGCI_LINT_CACHE: ${CI_PROJECT_DIR}/.cache/golangci-lint
+  script:
+    - golangci-lint run --output.code-climate.path gl-code-quality-report.json
+  artifacts:
+    when: always
+    reports:
+      codequality: gl-code-quality-report.json

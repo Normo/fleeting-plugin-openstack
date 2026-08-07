@@ -21,3 +21,6 @@
 go.work
 fleeting-plugin-openstack
 dist/
+
+# Go module and build caches, kept project-local for GitLab CI caching
+.cache/
