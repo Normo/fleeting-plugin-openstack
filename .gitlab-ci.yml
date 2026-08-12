@@ -10,7 +10,7 @@ workflow:
     - if: $CI_COMMIT_BRANCH
 
 default:
-  image: ${CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX}/golang:1.24
+  image: golang:1.24
 
 variables:
   GOMODCACHE: ${CI_PROJECT_DIR}/.cache/gomod
@@ -18,7 +18,7 @@ variables:
 
 lint:
   stage: check
-  image: ${CI_DEPENDENCY_PROXY_DIRECT_GROUP_IMAGE_PREFIX}/golangci/golangci-lint:v2.12.2
+  image: golangci/golangci-lint:v2.12.2
   cache:
     key:
       files:
