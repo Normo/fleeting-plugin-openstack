@@ -22,6 +22,8 @@ github.com/coreos/ignition/v2 v2.21.0 h1:2q44zldXRuBXOJl/6Z6xBshZzi2muQuXRZBGGpv
 github.com/coreos/ignition/v2 v2.21.0/go.mod h1:axhFZ3jEgXBjKtKp0rSMv2li0Rt43rasp5hS9uyYjco=
 github.com/coreos/vcontext v0.0.0-20231102161604-685dc7299dc5 h1:sMZSC2BW5LKCdvNbfN12SbKrNvtLBUNjfHZmMvI2ItY=
 github.com/coreos/vcontext v0.0.0-20231102161604-685dc7299dc5/go.mod h1:Salmysdw7DAVuobBW/LwsKKgpyCPHUhjyJoMJD+ZJiI=
+github.com/coreos/vcontext v0.0.0-20260306102053-7a68b5426c74 h1:GeZyMfeziJ/by5cAHUKrxPC+2trhoOMb6ECb4FZLRS8=
+github.com/coreos/vcontext v0.0.0-20260306102053-7a68b5426c74/go.mod h1:Salmysdw7DAVuobBW/LwsKKgpyCPHUhjyJoMJD+ZJiI=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
