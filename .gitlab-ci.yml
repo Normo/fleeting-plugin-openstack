@@ -2,6 +2,7 @@
 stages:
   - check
   - test
+  - build
 
 workflow:
   rules:
@@ -12,6 +13,15 @@ workflow:
 
 default:
   image: golang:1.24
+
+.go_cache: &go_cache
+  key:
+    files:
+      - go.sum
+  paths:
+    - .cache/gomod
+    - .cache/gobuild
+  policy: pull
 
 variables:
   GOMODCACHE: ${CI_PROJECT_DIR}/.cache/gomod
@@ -41,12 +51,7 @@ lint:
 test:
   stage: test
   cache:
-    key:
-      files:
-        - go.sum
-    paths:
-      - .cache/gomod
-      - .cache/gobuild
+    <<: *go_cache
     policy: pull-push
   before_script:
     - go install gotest.tools/gotestsum@v1.13.0
@@ -56,3 +61,16 @@ test:
     when: always
     reports:
       junit: report.xml
+
+build:all:
+  stage: build
+  variables:
+    GOOS: linux
+    CGO_ENABLED: "0"
+  cache:
+    <<: *go_cache
+  script:
+    - go build -trimpath
+  parallel:
+    matrix:
+      - GOARCH: [amd64, arm64, arm]
