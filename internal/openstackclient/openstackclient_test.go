@@ -18,14 +18,14 @@ func TestGetImageProperties(t *testing.T) {
 	img, err := os.ReadFile("../../testdata/image_get.json")
 	require.NoError(t, err)
 
-	testhelper.SetupHTTP()
-	defer testhelper.TeardownHTTP()
+	fakeserver := testhelper.SetupHTTP()
+	defer fakeserver.Teardown()
 
-	testhelper.ServeFile(t, "", "", "application/json", string(img))
+	fakeserver.ServeFile(t, "", "", "application/json", string(img))
 
 	client := &client{
-		compute: thclient.ServiceClient(),
-		image:   thclient.ServiceClient(),
+		compute: thclient.ServiceClient(fakeserver),
+		image:   thclient.ServiceClient(fakeserver),
 	}
 
 	ctx := context.TODO()
@@ -44,14 +44,14 @@ func TestGetImageByName(t *testing.T) {
 	img, err := os.ReadFile("../../testdata/image_list_one.json")
 	require.NoError(t, err)
 
-	testhelper.SetupHTTP()
-	defer testhelper.TeardownHTTP()
+	fakeserver := testhelper.SetupHTTP()
+	defer fakeserver.Teardown()
 
-	testhelper.ServeFile(t, "", "", "application/json", string(img))
+	fakeserver.ServeFile(t, "", "", "application/json", string(img))
 
 	client := &client{
-		compute: thclient.ServiceClient(),
-		image:   thclient.ServiceClient(),
+		compute: thclient.ServiceClient(fakeserver),
+		image:   thclient.ServiceClient(fakeserver),
 	}
 
 	ctx := context.TODO()
@@ -71,14 +71,14 @@ func TestGetImageByName_Many(t *testing.T) {
 	img, err := os.ReadFile("../../testdata/image_list_many.json")
 	require.NoError(t, err)
 
-	testhelper.SetupHTTP()
-	defer testhelper.TeardownHTTP()
+	fakeserver := testhelper.SetupHTTP()
+	defer fakeserver.Teardown()
 
-	testhelper.ServeFile(t, "", "", "application/json", string(img))
+	fakeserver.ServeFile(t, "", "", "application/json", string(img))
 
 	client := &client{
-		compute: thclient.ServiceClient(),
-		image:   thclient.ServiceClient(),
+		compute: thclient.ServiceClient(fakeserver),
+		image:   thclient.ServiceClient(fakeserver),
 	}
 
 	ctx := context.TODO()
